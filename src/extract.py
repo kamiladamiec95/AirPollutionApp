@@ -6,7 +6,11 @@ import requests
 load_dotenv('secrets/.env')
 OPENWEATHER_KEY_API = os.environ['OPENWEATHER_API_KEY']
 
-def get_city_coordinates(city):   
+def get_city_coordinates(city):
+    """Function returns tuple of city coordinates (latitude, longitude) with use of openweatherAPI
+    (https://openweathermap.org/api/geocoding-api)
+    """
+
     GEO_DIRECT_URL = 'http://api.openweathermap.org/geo/1.0/direct?'
     url = f'{GEO_DIRECT_URL}q={city},PL&appid={OPENWEATHER_KEY_API}'
     r = requests.get(url)
