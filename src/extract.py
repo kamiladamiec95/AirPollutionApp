@@ -19,6 +19,10 @@ def get_city_coordinates(city):
     return lat, lon
 
 def get_cities_pollution():
+    """Function returns dictionary of city pollution with use of openweatherAPI
+    (https://openweathermap.org/api/air-pollution)
+    """
+
     AIR_POLLUTION_URL = 'http://api.openweathermap.org/data/2.5/air_pollution?'
     f = open('../config.json') 
     cities = json.load(f)['cities'] 
