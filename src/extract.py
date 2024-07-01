@@ -2,6 +2,17 @@ import os
 from dotenv import load_dotenv
 import json
 import requests
+import datetime
+
+# przedstawienei tego w dataframe pandas
+
+def get_date():
+    date_now = datetime.datetime.now()
+    end = date_now.replace(hour=0, minute=0,second=0,microsecond=0)
+    start = end - datetime.timedelta(days=1)    
+    return int(datetime.datetime.timestamp(start)), int(datetime.datetime.timestamp(end))
+
+# print(get_date())
 
 load_dotenv('secrets/.env')
 OPENWEATHER_KEY_API = os.environ['OPENWEATHER_API_KEY']
@@ -22,7 +33,7 @@ def get_cities_pollution():
     """Function returns dictionary of city pollution with use of openweatherAPI
     (https://openweathermap.org/api/air-pollution)
     """
-
+    
     AIR_POLLUTION_URL = 'http://api.openweathermap.org/data/2.5/air_pollution?'
     f = open('../config.json') 
     cities = json.load(f)['cities'] 
@@ -39,4 +50,29 @@ def get_cities_pollution():
         
     return cities_pollution
 
-print(get_cities_pollution())
+
+def get_cities_pollution_history():
+    """Function returns dictionary of city pollution with use of openweatherAPI
+    (https://openweathermap.org/api/air-pollution)
+    """
+    AIR_POLLUTION_HISTORY_URL = 'http://api.openweathermap.org/data/2.5/air_pollution/history?'
+    # AIR_POLLUTION_URL = 'http://api.openweathermap.org/data/2.5/air_pollution?'
+    f = open('../config.json') 
+    cities = json.load(f)['cities'] 
+    cities_cord = {}
+    unix_start_date, unix_end_date = get_date()
+
+    for city in cities:
+        lat, lon = get_city_coordinates(city)
+        cities_cord[city] = lat, lon
+
+    cities_pollution = {}
+    for city, city_cord in cities_cord.items():
+        r = requests.get(f"{AIR_POLLUTION_HISTORY_URL}lat={lat}&lon={lon}&start={unix_start_date}&end={unix_end_date}&appid={OPENWEATHER_KEY_API}")
+        # r = requests.get(f"{AIR_POLLUTION_URL}lat={city_cord[0]}&lon={city_cord[1]}&appid={OPENWEATHER_KEY_API}")
+        cities_pollution[city] = json.loads(r.text)['list']
+        
+    return cities_pollution
+
+
+print(get_cities_pollution_history())
