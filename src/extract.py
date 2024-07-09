@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import json
 import requests
 import datetime
+import pandas
 
 # przedstawienei tego w dataframe pandas
 
@@ -72,7 +73,24 @@ def get_cities_pollution_history():
         # r = requests.get(f"{AIR_POLLUTION_URL}lat={city_cord[0]}&lon={city_cord[1]}&appid={OPENWEATHER_KEY_API}")
         cities_pollution[city] = json.loads(r.text)['list']
         
-    return cities_pollution
+    return cities_pollution #['Gdansk']
 
 
-print(get_cities_pollution_history())
+# print(get_cities_pollution_history())
+
+# df = pandas.DataFrame(columns=['City','co','no','no2','o3','so2','pm2_5', 'pm10', 'nh3'])
+l = []
+
+for city, values in get_cities_pollution_history().items():
+    # print(city)
+    # print(values)
+    for i in values:
+        i['components']['city'] = city
+        l.append(i['components'])
+        # for v1 in i['components'].keys():
+        #     print(v1)
+            # l.append([city,v1,v2])
+            # print(l)
+
+df = pandas.DataFrame(l)
+print(df)
