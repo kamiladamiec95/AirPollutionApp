@@ -72,25 +72,18 @@ def get_cities_pollution_history():
         r = requests.get(f"{AIR_POLLUTION_HISTORY_URL}lat={lat}&lon={lon}&start={unix_start_date}&end={unix_end_date}&appid={OPENWEATHER_KEY_API}")
         # r = requests.get(f"{AIR_POLLUTION_URL}lat={city_cord[0]}&lon={city_cord[1]}&appid={OPENWEATHER_KEY_API}")
         cities_pollution[city] = json.loads(r.text)['list']
+
+    l = []
+
+    for city, values in cities_pollution.items():
+        for value in values:
+            value['components']['city'] = city
+            l.append(value['components'])    
         
-    return cities_pollution #['Gdansk']
+    cities_pollution = pandas.DataFrame(l)
+
+    return cities_pollution
 
 
-# print(get_cities_pollution_history())
+print(get_cities_pollution_history())
 
-# df = pandas.DataFrame(columns=['City','co','no','no2','o3','so2','pm2_5', 'pm10', 'nh3'])
-l = []
-
-for city, values in get_cities_pollution_history().items():
-    # print(city)
-    # print(values)
-    for i in values:
-        i['components']['city'] = city
-        l.append(i['components'])
-        # for v1 in i['components'].keys():
-        #     print(v1)
-            # l.append([city,v1,v2])
-            # print(l)
-
-df = pandas.DataFrame(l)
-print(df)
