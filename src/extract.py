@@ -15,8 +15,10 @@ def get_date():
 
 # print(get_date())
 
-load_dotenv('secrets/.env')
-OPENWEATHER_KEY_API = os.environ['OPENWEATHER_API_KEY']
+# load_dotenv('secrets/.env')
+# OPENWEATHER_KEY_API = os.environ['OPENWEATHER_API_KEY']
+
+OPENWEATHER_KEY_API = 'f15beeb0cbb6a9d0a56a0d81376437ca'
 
 def get_city_coordinates(city):
     """Function returns tuple of city coordinates (latitude, longitude) with use of openweatherAPI
