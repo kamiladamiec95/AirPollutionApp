@@ -6,7 +6,7 @@ import ast
 import base64
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))  # add gcloud_functions
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # add gcloud
-
+from src.extract import get_cities_pollution_history
 
 
 # PLIK CONFIG
@@ -15,4 +15,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # 
     
 @functions_framework.http
 def gcloud_get_openweather_data_function(request, context=None) -> str:
-    return 'helloworld'
+    pollution = get_cities_pollution_history('config.json')
+    return str(pollution)
+
+

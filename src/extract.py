@@ -52,13 +52,14 @@ def get_cities_pollution():
     return cities_pollution
 
 
-def get_cities_pollution_history():
+def get_cities_pollution_history(path):
     """Function returns dictionary of city pollution with use of openweatherAPI
     (https://openweathermap.org/api/air-pollution)
     """
     AIR_POLLUTION_HISTORY_URL = 'http://api.openweathermap.org/data/2.5/air_pollution/history?'
     # AIR_POLLUTION_URL = 'http://api.openweathermap.org/data/2.5/air_pollution?'
-    f = open('../config.json') 
+    # f = open('../config.json') 
+    f = open(path) 
     cities = json.load(f)['cities'] 
     cities_cord = {}
     unix_start_date, unix_end_date = get_date()
@@ -73,17 +74,16 @@ def get_cities_pollution_history():
         # r = requests.get(f"{AIR_POLLUTION_URL}lat={city_cord[0]}&lon={city_cord[1]}&appid={OPENWEATHER_KEY_API}")
         cities_pollution[city] = json.loads(r.text)['list']
 
-    l = []
+    # l = []
 
-    for city, values in cities_pollution.items():
-        for value in values:
-            value['components']['city'] = city
-            l.append(value['components'])    
-        
-    cities_pollution = pandas.DataFrame(l)
+    # for city, values in cities_pollution.items():
+    #     for value in values:
+    #         value['components']['city'] = city
+    #         value['components']['date'] = int(value['dt'])
+    #         l.append(value['components'])    
+    # cities_pollution = pandas.DataFrame(l)
 
     return cities_pollution
 
-
-print(get_cities_pollution_history())
-
+# print(get_cities_pollution_history().where(get_cities_pollution_history()['date'] >= get_date()[0]))
+# print(a)
