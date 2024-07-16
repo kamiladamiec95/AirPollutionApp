@@ -41,5 +41,8 @@ jobs:
         --entry-point gcloud_get_openweather_data_function \
         --region europe-central2 \
         --source ./
+
+    - name: Deploy workflow
+        run: |
         gcloud workflows deploy AirPollutionWorkflow 
         --source=my_workflow.yaml --location=us-central1
