@@ -44,5 +44,5 @@ jobs:
 
     - name: Deploy workflow
         run: |
-        gcloud workflows deploy AirPollutionWorkflow \
-        --source C:\Users\kamil\Desktop\de\AirPollutionApp\.github\workflows\pipeline.yml
+          gcloud workflows deploy AirPollutionWorkflow \
+          --source pipeline.yml
