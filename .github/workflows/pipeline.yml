@@ -43,6 +43,6 @@ jobs:
         --source ./
 
     - name: Deploy workflow
-        run: |
-          gcloud workflows deploy AirPollutionWorkflow \
-          --source ./my_workflow.yaml
+      run: |
+        gcloud workflows deploy AirPollutionWorkflow \
+        --source ./my_workflow.yaml
