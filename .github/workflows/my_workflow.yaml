@@ -8,3 +8,14 @@ main:
           auth:
             type: OIDC
         result: function_response
+    - publish_to_pubsub:
+        call: googleapis.pubsub.v1.projects.topics.publish
+        args:
+          topic: projects/shining-rampart-426818-e1/topics/AirPollutionTopic 
+          body:
+            messages:
+              - data: ${base64.encode(text.encode(function_response.body))}
+              # - data: ${base64.encode(text.encode("My static message 2"))}
+        result: pubsub_response
+    - return_results: 
+        return: ${pubsub_response}        
