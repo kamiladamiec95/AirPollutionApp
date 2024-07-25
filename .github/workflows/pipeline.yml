@@ -45,7 +45,7 @@ jobs:
     - name: Deploy workflow
       run: |
         gcloud workflows deploy AirPollutionWorkflow \
-        --region europe-central2 \
+        --location europe-central2 \
         --source ./gcloud/workflows/my_workflow.yaml
 
 
