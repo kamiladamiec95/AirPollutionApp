@@ -3,18 +3,23 @@ import os
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = r"C:\Users\kamil\Desktop\de\AirPollutionApp\secrets\shining-rampart-426818-e1-b7a4fe01e204.json"
 
 
-client = pubsub_v1.SubscriberClient()
-project_id = "shining-rampart-426818-e1"
-subscription_id = "AirPollutionTopic-sub"
+def create_pubsub_connection():
 
-# Create a Pub/Sub subscriber client
-subscriber = pubsub_v1.SubscriberClient()
-subscription_path = subscriber.subscription_path(project_id, subscription_id)
+    client = pubsub_v1.SubscriberClient()
+    project_id = "shining-rampart-426818-e1"
+    subscription_id = "AirPollutionTopic-sub"
 
+    # Create a Pub/Sub subscriber client
+    subscriber = pubsub_v1.SubscriberClient()
+    subscription_path = subscriber.subscription_path(project_id, subscription_id)
+
+    return subscription_path
 
 # Callback function to process and transform messages
 def callback(message):
     try:
+        create_pubsub_connection()
+
         # Decode the message data
         message_data = message.data.decode("utf-8")
         

@@ -33,16 +33,26 @@ jobs:
 
 
 
-    - name: Deploy to Google Cloud Functions
+    - name: Deploy extract function to Google Cloud Functions
       run: |
-        gcloud functions deploy air_pollution_function \
+        gcloud functions deploy extract_airpollution_function \
         --runtime python311 \
         --trigger-http \
         --entry-point gcloud_get_openweather_data_function \
         --region europe-central2 \
-        --source ./
+        --source ./gcloud/functions
 
     - name: Deploy workflow
       run: |
         gcloud workflows deploy AirPollutionWorkflow \
         --source ./my_workflow.yaml
+
+
+    - name: Deploy transform function to Google Cloud Functions
+      run: |
+        gcloud functions deploy transform_airpollution_function \
+        --runtime python311 \
+        --trigger-topic projects/shining-rampart-426818-e1/topics/AirPollutionTopic \
+        --entry-point hello_pubsub \
+        --region europe-central2 \
+        --source ./gcloud/functions
