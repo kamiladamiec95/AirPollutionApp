@@ -4,7 +4,7 @@ main:
     - call_function:
         call: http.get
         args:
-          url: https://europe-central2-shining-rampart-426818-e1.cloudfunctions.net/air_pollution_function
+          url: https://europe-central2-shining-rampart-426818-e1.cloudfunctions.net/extract_airpollution_function
           auth:
             type: OIDC
         result: function_response
