@@ -28,3 +28,16 @@ def hello_pubsub(cloud_event):
     data = src.transform.convert_pandas(base64.b64decode(cloud_event.data["message"]["data"]))
     return str(True)
 
+@functions_framework.http
+def test_function(request, context=None) -> str:
+    pollution = get_cities_pollution_history('config.json')
+    dict_data = ast.literal_eval(str(pollution))
+    json_str = json.dumps(dict_data)
+    data = src.transform.convert_pandas(json.loads(json_str))
+    # print(dict_data, type(dict_data))
+    print(data)
+    return str(True)
+
+
+## melt w pandasie
+## jak to wstawic do bigquery

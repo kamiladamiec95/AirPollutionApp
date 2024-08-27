@@ -2,8 +2,7 @@ import json
 import pandas as pd
 
 def convert_pandas(data):
-    data = json.loads(data)
-    data = pd.read_json(data)
+    data = pd.DataFrame.from_dict(data)
     return data
 
 
