@@ -56,5 +56,5 @@ jobs:
         --trigger-topic AirPollutionTopic \
         --entry-point hello_pubsub \
         --region europe-central2 \
-        --source ./gcloud/functions
+        --source ./gcloud/functions \
         --set-env-vars GOOGLE_APPLICATION_CREDENTIALS=${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
